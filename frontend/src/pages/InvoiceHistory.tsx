@@ -172,7 +172,7 @@ setInvoices(
           </p>
         </div>
 
-        <div className="flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs text-slate-500 shadow-sm">
+        <div className="flex items-center gap-2 rounded-md border border-slate-200 bg-white px-3 py-2 text-xs text-slate-500 shadow-sm">
           <FileText size={14} />
           {filteredInvoices.length} invoices
         </div>
@@ -181,7 +181,7 @@ setInvoices(
 
       {/* Table Card */}
 
-      <div className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
+      <div className="overflow-hidden rounded-e-md border border-slate-200 bg-white shadow-sm">
 
         {/* Filters */}
 
@@ -210,7 +210,7 @@ setInvoices(
               className="
                 h-11
                 w-full
-                rounded-xl
+                rounded-lg
                 border
                 border-slate-200
                 bg-slate-50/50
@@ -257,7 +257,7 @@ setInvoices(
                 h-11
                 w-full
                 appearance-none
-                rounded-xl
+                rounded-lg
                 border
                 border-slate-200
                 bg-slate-50/50
@@ -297,7 +297,7 @@ setInvoices(
         {/* Error */}
 
         {error && (
-          <div className="m-4 rounded-xl border border-red-100 bg-red-50 px-4 py-3 text-sm text-red-600">
+          <div className="m-4 rounded-md border border-red-100 bg-red-50 px-4 py-3 text-sm text-red-600">
             {error}
           </div>
         )}
@@ -405,7 +405,7 @@ setInvoices(
 
                         <div className="flex items-center gap-3">
 
-                          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-indigo-50 text-indigo-600 transition-transform duration-200 group-hover:scale-105">
+                          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-indigo-50 text-indigo-600 transition-transform duration-200 group-hover:scale-105">
                             <FileText size={16} />
                           </div>
 
@@ -510,7 +510,7 @@ setInvoices(
                             inline-flex
                             items-center
                             gap-1.5
-                            rounded-xl
+                            rounded-lg
                             border
                             border-slate-200
                             bg-white

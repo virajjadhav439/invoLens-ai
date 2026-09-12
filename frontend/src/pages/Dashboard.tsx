@@ -198,7 +198,7 @@ const Dashboard = () => {
 
         <div className="
           max-w-md
-          rounded-2xl
+          rounded-lg
           border
           border-rose-200
           bg-white
@@ -242,7 +242,7 @@ const Dashboard = () => {
             onClick={loadDashboard}
             className="
               mt-5
-              rounded-xl
+              rounded-md
               bg-slate-900
               px-4
               py-2
@@ -274,7 +274,7 @@ const Dashboard = () => {
       <section className="
         relative
         overflow-hidden
-        rounded-3xl
+        rounded-sm
         border
         border-slate-200
         bg-white
@@ -388,7 +388,7 @@ const Dashboard = () => {
     items-center
     justify-center
     gap-2
-    rounded-xl
+    rounded-e-md
     bg-slate-950
     px-4
     py-2.5
@@ -415,7 +415,7 @@ const Dashboard = () => {
                 items-center
                 justify-center
                 gap-2
-                rounded-xl
+                rounded-e-md
                 border
                 border-slate-200
                 bg-white
@@ -502,7 +502,7 @@ const Dashboard = () => {
         {/* Spending */}
 
         <div className="
-          rounded-2xl
+          rounded-lg
           border
           border-slate-200
           bg-white
@@ -578,7 +578,7 @@ const Dashboard = () => {
         {/* Vendors */}
 
         <div className="
-          rounded-2xl
+          rounded-lg
           border
           border-slate-200
           bg-white
@@ -633,7 +633,7 @@ const Dashboard = () => {
                     flex
                     items-center
                     gap-3
-                    rounded-xl
+                    rounded-e-md
                     px-2
                     py-3
                     transition
@@ -648,7 +648,7 @@ const Dashboard = () => {
                     shrink-0
                     items-center
                     justify-center
-                    rounded-xl
+                    rounded-e-md
                     bg-slate-100
                     text-xs
                     font-bold
@@ -704,7 +704,7 @@ const Dashboard = () => {
 
       <section className="
         overflow-hidden
-        rounded-2xl
+        rounded-lg
         border
         border-slate-200
         bg-white

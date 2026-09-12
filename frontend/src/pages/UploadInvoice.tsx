@@ -10,7 +10,7 @@ import {
   Loader2,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "../services/api";
 
 const UploadInvoice = () => {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -67,45 +67,47 @@ const UploadInvoice = () => {
   };
 
   const processInvoice = async () => {
-    if (!file) return;
+  if (!file) return;
 
-    try {
-      setProcessing(true);
-      setError("");
+  try {
+    setProcessing(true);
+    setError("");
 
-      const formData = new FormData();
-      formData.append("file", file);
+    const formData = new FormData();
 
-      const response = await axios.post(
-        "/api/invoices/process",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-          withCredentials: true,
-        }
-      );
+    formData.append("file", file);
 
-      const invoiceId =
-        response.data?.data?._id ||
-        response.data?.invoice?._id ||
-        response.data?._id;
+    const response = await api.post(
+      "/invoices/process",
+      formData
+    );
 
-      if (invoiceId) {
-        navigate(`/invoices/${invoiceId}`);
-      } else {
-        navigate("/history");
-      }
-    } catch (err) {
-      console.error(err);
+    const invoiceId =
+      response.data?.data?._id ||
+      response.data?.invoice?._id ||
+      response.data?._id;
+
+    if (invoiceId) {
+      navigate(`/invoices/${invoiceId}`);
+    } else {
       setError(
-        "Unable to process this invoice. Please try again."
+        "Invoice was processed, but no invoice ID was returned."
       );
-    } finally {
-      setProcessing(false);
     }
-  };
+  } catch (err: any) {
+    console.error("Invoice processing error:", err);
+
+    const backendMessage =
+      err?.response?.data?.message;
+
+    setError(
+      backendMessage ||
+        "Unable to process this invoice. Please try again."
+    );
+  } finally {
+    setProcessing(false);
+  }
+};
 
   return (
     <div className="mx-auto w-full max-w-6xl px-4 py-6 sm:px-6 lg:px-8">
@@ -148,7 +150,7 @@ const UploadInvoice = () => {
 
         {/* Upload Card */}
 
-        <div className="rounded-3xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
+        <div className="rounded-e-md border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
 
           <div
             onDragOver={(event) => {
@@ -168,7 +170,7 @@ const UploadInvoice = () => {
               items-center
               justify-center
               overflow-hidden
-              rounded-2xl
+              rounded-sm
               border-2
               border-dashed
               px-6
@@ -254,7 +256,7 @@ const UploadInvoice = () => {
           {file && (
             <div className="mt-4 flex items-center gap-3 rounded-2xl border border-indigo-100 bg-indigo-50/50 p-4">
 
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white text-indigo-600 shadow-sm">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-white text-indigo-600 shadow-sm">
                 <FileText size={19} />
               </div>
 
@@ -284,7 +286,7 @@ const UploadInvoice = () => {
           {/* Error */}
 
           {error && (
-            <div className="mt-4 rounded-xl border border-red-100 bg-red-50 px-4 py-3 text-sm text-red-600">
+            <div className="mt-4 rounded-md border border-red-100 bg-red-50 px-4 py-3 text-sm text-red-600">
               {error}
             </div>
           )}
@@ -301,7 +303,7 @@ const UploadInvoice = () => {
               items-center
               justify-center
               gap-2
-              rounded-xl
+              rounded-md
               bg-slate-950
               px-5
               py-3
@@ -342,10 +344,10 @@ const UploadInvoice = () => {
 
         <div className="space-y-4">
 
-          <div className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
+          <div className="rounded-e-md border border-slate-200 bg-white p-5 shadow-sm">
 
             <div className="mb-5 flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-50 text-indigo-600">
+              <div className="flex h-10 w-10 items-center justify-center rounded-md bg-indigo-50 text-indigo-600">
                 <Sparkles size={18} />
               </div>
 
@@ -392,28 +394,7 @@ const UploadInvoice = () => {
 
           </div>
 
-          <div className="rounded-3xl border border-emerald-100 bg-emerald-50/50 p-5">
-
-            <div className="flex items-start gap-3">
-              <CheckCircle2
-                size={19}
-                className="mt-0.5 shrink-0 text-emerald-500"
-              />
-
-              <div>
-                <p className="text-sm font-semibold text-slate-800">
-                  Demo AI Engine Ready
-                </p>
-
-                <p className="mt-1 text-xs leading-5 text-slate-500">
-                  The MVP currently uses deterministic dummy
-                  extraction data. Your FastAPI model can replace
-                  it later without changing the frontend contract.
-                </p>
-              </div>
-            </div>
-
-          </div>
+          
 
         </div>
 

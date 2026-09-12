@@ -21,7 +21,7 @@ const StatCard = ({
   group
   relative
   overflow-hidden
-  rounded-2xl
+  rounded-sm
   border
   border-slate-200
   bg-white
@@ -98,7 +98,7 @@ const StatCard = ({
           w-10
           items-center
           justify-center
-          rounded-xl
+          rounded-sm
           ${iconClass}
         `}
         >

@@ -62,7 +62,7 @@ const Layout = () => {
             w-10
             items-center
             justify-center
-            rounded-xl
+            rounded-sm
             bg-linear-to-br
             from-indigo-500
             to-blue-600
@@ -119,7 +119,7 @@ const Layout = () => {
                     flex
                     items-center
                     gap-3
-                    rounded-xl
+                    
                     px-3
                     py-2.5
                     text-md
@@ -234,7 +234,7 @@ const Layout = () => {
               flex
               items-center
               gap-2
-              rounded-xl
+              rounded-sm
               border
               border-slate-200
               bg-white
@@ -249,7 +249,7 @@ const Layout = () => {
                 w-7
                 items-center
                 justify-center
-                rounded-lg
+                rounded-sm
                 bg-slate-900
                 text-xs
                 font-semibold

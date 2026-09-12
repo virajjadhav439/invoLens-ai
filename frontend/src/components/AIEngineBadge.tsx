@@ -71,7 +71,7 @@ const AIEngineBadge = () => {
               shrink-0
               items-center
               justify-center
-              rounded-xl
+              rounded-sm
               border
               border-slate-200
               bg-white

@@ -38,7 +38,8 @@ export const processInvoiceController = async (
 
     const extracted = await processInvoice(
       req.file.buffer,
-      req.file.originalname
+      req.file.originalname,
+      req.file.mimetype
     );
 
     const validation = await validateInvoice(
@@ -57,6 +58,7 @@ export const processInvoiceController = async (
       message: "Invoice processed successfully.",
       data: savedInvoice
     });
+
   } catch (error) {
     next(error);
   }

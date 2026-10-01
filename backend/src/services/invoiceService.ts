@@ -19,6 +19,12 @@ interface CreateInvoiceData
   extends ExtractedInvoice {
   validationStatus: InvoiceStatus;
   validationIssues: ValidationIssue[];
+  cvProcessing?: {
+    jobId: string;
+    ocrCount: number;
+    annotatedImage: string;
+    extractionMethod: string;
+  };
   sourceFileName?: string;
 }
 

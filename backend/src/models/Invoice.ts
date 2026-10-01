@@ -1,5 +1,9 @@
 import mongoose, { Document, Schema } from "mongoose";
 
+/* ============================================
+   INVOICE ITEM
+============================================ */
+
 export interface InvoiceItem {
   description: string;
   quantity: number;
@@ -8,16 +12,28 @@ export interface InvoiceItem {
   total: number;
 }
 
+/* ============================================
+   SUPPLIER
+============================================ */
+
 export interface Supplier {
   name: string;
   address: string;
   gstin?: string;
 }
 
+/* ============================================
+   CUSTOMER
+============================================ */
+
 export interface Customer {
   name: string;
   gstin?: string;
 }
+
+/* ============================================
+   FINANCIALS
+============================================ */
 
 export interface Financials {
   subtotal: number;
@@ -29,11 +45,30 @@ export interface Financials {
   currency: string;
 }
 
+/* ============================================
+   VALIDATION ISSUE
+============================================ */
+
 export interface ValidationIssue {
   type: string;
   severity: "LOW" | "MEDIUM" | "HIGH";
   message: string;
 }
+
+/* ============================================
+   CV PROCESSING
+============================================ */
+
+export interface CVProcessing {
+  jobId: string;
+  ocrCount: number;
+  annotatedImage: string;
+  extractionMethod: string;
+}
+
+/* ============================================
+   INVOICE DOCUMENT
+============================================ */
 
 export interface IInvoice extends Document {
   invoiceNumber: string;
@@ -63,13 +98,15 @@ export interface IInvoice extends Document {
 
   validationIssues: ValidationIssue[];
 
+  cvProcessing?: CVProcessing;
+
   sourceFileName?: string;
 
   createdAt: Date;
 }
 
 /* ============================================
-   INVOICE ITEM
+   INVOICE ITEM SCHEMA
 ============================================ */
 
 const invoiceItemSchema = new Schema<InvoiceItem>(
@@ -110,7 +147,7 @@ const invoiceItemSchema = new Schema<InvoiceItem>(
 );
 
 /* ============================================
-   SUPPLIER
+   SUPPLIER SCHEMA
 ============================================ */
 
 const supplierSchema = new Schema<Supplier>(
@@ -138,7 +175,7 @@ const supplierSchema = new Schema<Supplier>(
 );
 
 /* ============================================
-   CUSTOMER
+   CUSTOMER SCHEMA
 ============================================ */
 
 const customerSchema = new Schema<Customer>(
@@ -160,7 +197,7 @@ const customerSchema = new Schema<Customer>(
 );
 
 /* ============================================
-   FINANCIALS
+   FINANCIALS SCHEMA
 ============================================ */
 
 const financialSchema = new Schema<Financials>(
@@ -212,7 +249,7 @@ const financialSchema = new Schema<Financials>(
 );
 
 /* ============================================
-   VALIDATION ISSUE
+   VALIDATION ISSUE SCHEMA
 ============================================ */
 
 const validationIssueSchema =
@@ -240,7 +277,39 @@ const validationIssueSchema =
   );
 
 /* ============================================
-   INVOICE
+   CV PROCESSING SCHEMA
+============================================ */
+
+const cvProcessingSchema =
+  new Schema<CVProcessing>(
+    {
+      jobId: {
+        type: String,
+        default: "",
+      },
+
+      ocrCount: {
+        type: Number,
+        default: 0,
+      },
+
+      annotatedImage: {
+        type: String,
+        default: "",
+      },
+
+      extractionMethod: {
+        type: String,
+        default: "OpenCV + Tesseract OCR",
+      },
+    },
+    {
+      _id: false,
+    }
+  );
+
+/* ============================================
+   INVOICE SCHEMA
 ============================================ */
 
 const invoiceSchema = new Schema<IInvoice>(
@@ -258,7 +327,6 @@ const invoiceSchema = new Schema<IInvoice>(
 
     /*
      * Due date is NOT mandatory.
-     *
      * Some invoices don't contain a due date.
      */
     dueDate: {
@@ -305,7 +373,7 @@ const invoiceSchema = new Schema<IInvoice>(
 
     extractionMethod: {
       type: String,
-      default: "gemini",
+      default: "OpenCV + Tesseract OCR",
     },
 
     validationStatus: {
@@ -324,6 +392,20 @@ const invoiceSchema = new Schema<IInvoice>(
       default: [],
     },
 
+    /*
+     * Computer Vision processing information.
+     *
+     * Stores:
+     * - Jupyter job ID
+     * - Number of OCR regions detected
+     * - Bounding-box image filename
+     * - Extraction method
+     */
+    cvProcessing: {
+      type: cvProcessingSchema,
+      default: undefined,
+    },
+
     sourceFileName: {
       type: String,
       default: "",
@@ -337,6 +419,10 @@ const invoiceSchema = new Schema<IInvoice>(
     },
   }
 );
+
+/* ============================================
+   EXPORT MODEL
+============================================ */
 
 export const Invoice =
   mongoose.model<IInvoice>(
